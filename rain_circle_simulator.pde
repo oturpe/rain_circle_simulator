@@ -64,21 +64,21 @@ float[][][] dropPositions = {
 };
 
 class Drop {
-  // Moment of impact
-  int impactTime;
   // Ring of impact
   int ring;
   // Number of drop
   int dropNumber;
+  // Moment of impact
+  int impactFrame;
   
-  Drop(int impactTime, int ring, int dropNumber) {
-    this.impactTime = impactTime;
+  Drop(int ring, int dropNumber, int impactFrame) {
+    this.impactFrame = impactFrame;
     this.ring = ring;
     this.dropNumber = dropNumber;
   }
   
-  void draw(int currentTime) {
-    int duration = currentTime - impactTime;
+  void draw(int currentFrame) {
+    int duration = currentFrame - impactFrame;
     if (duration < 0) {
       // Nothing to draw
       return;
@@ -95,6 +95,13 @@ class Drop {
 }
 
 ArrayList<Drop> drops = new ArrayList<Drop>();
+
+/**
+ * Add drop with given properties to the list.
+ */
+void addDrop(int ring, int dropNumber, int impactFrame) {
+  drops.add(new Drop(ring, dropNumber, impactFrame));
+}
 
 int strokeColor = 80;
 
@@ -113,50 +120,40 @@ void setup() {
   ellipseMode(RADIUS);
 }
 
-void setDropSequence() {
-  // Spiral
-  /*
-  drops.add(new Drop(0, 1, 0));
-  drops.add(new Drop(4, 1, 1));
-  drops.add(new Drop(8, 1, 2));
-  drops.add(new Drop(12, 1, 3));
-  drops.add(new Drop(16, 1, 4));
-  drops.add(new Drop(20, 1, 5));
-  */
-
-  // Two triangles
-  drops.add(new Drop(10, 1, 0));
-  drops.add(new Drop(10, 1, 2));
-  drops.add(new Drop(10, 1, 4));
-  
-  drops.add(new Drop(15, 1, 1));
-  drops.add(new Drop(15, 1, 3));
-  drops.add(new Drop(15, 1, 5));
-}
-
-int currentTime = 0;
-
 void draw() {
   background(strokeColor);
+  // Pool shape
   fill(0);
   ellipse(width/2, height/2, poolDiameter/2, poolDiameter/2);
   noFill();
 
-  currentTime += 1;
-  if (currentTime > maxTime) {
-    currentTime = 0;
-  }
-
+  // Drops, 
   for (Drop drop: drops) {
-    drop.draw(currentTime);
+    drop.draw(frameCount % maxTime);
   }
+}
 
-  // Example pattern: one whole ring
+/**
+ * Sets the drop sequence. This is the only function that should need
+ * any modification in normal use of this simulator.
+ */
+void setDropSequence() {
+  // Two triangles
+  addDrop(1, 0, 10);
+  addDrop(1, 2, 10);
+  addDrop(1, 4, 10);
+  
+  addDrop(1, 1, 15);
+  addDrop(1, 3, 15);
+  addDrop(1, 5, 15);
+
+  // Spiral
   /*
-  ringRadius = ringRadius + speed;
-  float dropRing[][] = dropPositionsCentric[2];
-  for (int i=0; i<dropRing.length; i++) {
-    ellipse(dropRing[i][0], dropRing[i][1], ringRadius, ringRadius);
-  }
+  addDrop(0, 1, 0);
+  addDrop(4, 1, 1);
+  addDrop(8, 1, 2);
+  addDrop(12, 1, 3);
+  addDrop(16, 1, 4);
+  addDrop(20, 1, 5);
   */
 }
