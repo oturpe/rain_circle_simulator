@@ -178,22 +178,39 @@ void draw() {
  * any modification in normal use of this simulator.
  */
 void setDropPattern() {
+  // Define any number of drops using the following syntax:
+  // addDrop(circle, position, time).
+
+  // Single drop in the middle
+  addDrop(Ring.MIDDLE, 0, 0);
+
+  // Other examples:  
+  
+  // A triangle
+  /*
+  addDrop(Ring.INNER, 0, 10);
+  addDrop(Ring.INNER, 2, 10);
+  addDrop(Ring.INNER, 4, 10);
+  */
+
   // Two triangles
   /*
   addDrop(Ring.INNER, 0, 10);
   addDrop(Ring.INNER, 2, 10);
   addDrop(Ring.INNER, 4, 10);
   
-  addDrop(Ring.INNER, 1, 10);
-  addDrop(Ring.INNER, 3, 10);
-  addDrop(Ring.INNER, 5, 10);
-   */
-   
+  addDrop(Ring.INNER, 1, 20);
+  addDrop(Ring.INNER, 3, 20);
+  addDrop(Ring.INNER, 5, 20);
+  */
+  
   // Spiral
+  /*
   addDrop(Ring.INNER, 6, 2);
   addDrop(Ring.INNER, 1, 4);
   addDrop(Ring.INNER, 2, 6);
   addDrop(Ring.INNER, 3, 8);
   addDrop(Ring.INNER, 4, 10);
-  addDrop(Ring.INNER, 5, 12); 
+  addDrop(Ring.INNER, 5, 12);
+  */
 }
