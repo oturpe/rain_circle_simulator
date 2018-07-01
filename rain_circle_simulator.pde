@@ -7,8 +7,6 @@
  * Coordinates are centimeters. 
  */
  
-float ringRadius;
-
 // One centimeter in pixels
 float cm = 4.0;
 
@@ -63,20 +61,51 @@ float[][][] dropPositions = {
   }
 };
 
+/**
+ * A single drop impacting the surface at a specified moment of time and
+ * the ring wave created by it.
+ *
+ * Drop position is given by specifying the ring to which it belongs and
+ * position on that ring. Time of impact is given as animation frame number.
+ *
+ * The ring caused by the drop is drawn by calling the draw() method. 
+ */
 class Drop {
   // Ring of impact
-  int ring;
-  // Number of drop
-  int dropNumber;
+  Ring ring;
+  // Position index in the ring
+  int position;
   // Moment of impact
   int impactFrame;
   
-  Drop(int ring, int dropNumber, int impactFrame) {
-    this.impactFrame = impactFrame;
+  /**
+   * Initialize a new drop.
+   *
+   * @param ring
+   *    Ring of this drop
+   *
+   * @param position
+   *    Position index
+   *
+   * @param impactFrame
+   *    Time of impact
+   */
+  Drop(Ring ring, int position, int impactFrame) {
     this.ring = ring;
-    this.dropNumber = dropNumber;
+    this.position = position % ring.getDropCount();
+    this.impactFrame = impactFrame;
   }
-  
+
+  /**
+   * Draws the ring caused by this drop.
+   *
+   * Current frame is passed in as parameter so that internal
+   * frameNumber parameter can be preprocessed before passing it here.
+   * This can be used to make the animation cyclic.
+   *
+   * @param currentFrame
+   *    Current running frame
+   */
   void draw(int currentFrame) {
     int duration = currentFrame - impactFrame;
     if (duration < 0) {
@@ -84,25 +113,37 @@ class Drop {
       return;
     }
     
-    ringRadius = speed*duration;
+    float ringRadius = speed*duration;
     ellipse(
-      dropPositions[ring][dropNumber][0],
-      dropPositions[ring][dropNumber][1],
+      dropPositions[ring.getIndex()][position][0],
+      dropPositions[ring.getIndex()][position][1],
       ringRadius,
       ringRadius
     );
   } 
 }
 
+// List of drops in simulation.
 ArrayList<Drop> drops = new ArrayList<Drop>();
 
 /**
- * Add drop with given properties to the list.
+ * Add drop with given properties to the drop list using simple
+ * syntax.
+ *
+ * @param ring
+ *    Drop ring
+ *
+ * @param position
+ *    Position in the ring
+ *
+ * @param impactFrame
+ *    Time of impact
  */
-void addDrop(int ring, int dropNumber, int impactFrame) {
-  drops.add(new Drop(ring, dropNumber, impactFrame));
+void addDrop(Ring ring, int position, int impactFrame) {
+  drops.add(new Drop(ring, position, impactFrame));
 }
 
+// Stroke color in animation
 int strokeColor = 80;
 
 void setup() {
@@ -110,10 +151,9 @@ void setup() {
   // written into this particular call.
   size(800, 800);
 
-  setDropSequence();
+  // Modify setDropPattern() method to define simulated pattern
+  setDropPattern();
   frameRate(fps);
-  // Start from moment of drop
-  ringRadius = 0;
   
   noFill();
   stroke(strokeColor);
@@ -137,23 +177,23 @@ void draw() {
  * Sets the drop sequence. This is the only function that should need
  * any modification in normal use of this simulator.
  */
-void setDropSequence() {
+void setDropPattern() {
   // Two triangles
-  addDrop(1, 0, 10);
-  addDrop(1, 2, 10);
-  addDrop(1, 4, 10);
-  
-  addDrop(1, 1, 15);
-  addDrop(1, 3, 15);
-  addDrop(1, 5, 15);
-
-  // Spiral
   /*
-  addDrop(0, 1, 0);
-  addDrop(4, 1, 1);
-  addDrop(8, 1, 2);
-  addDrop(12, 1, 3);
-  addDrop(16, 1, 4);
-  addDrop(20, 1, 5);
-  */
+  addDrop(Ring.INNER, 0, 10);
+  addDrop(Ring.INNER, 2, 10);
+  addDrop(Ring.INNER, 4, 10);
+  
+  addDrop(Ring.INNER, 1, 10);
+  addDrop(Ring.INNER, 3, 10);
+  addDrop(Ring.INNER, 5, 10);
+   */
+   
+  // Spiral
+  addDrop(Ring.INNER, 6, 2);
+  addDrop(Ring.INNER, 1, 4);
+  addDrop(Ring.INNER, 2, 6);
+  addDrop(Ring.INNER, 3, 8);
+  addDrop(Ring.INNER, 4, 10);
+  addDrop(Ring.INNER, 5, 12); 
 }
