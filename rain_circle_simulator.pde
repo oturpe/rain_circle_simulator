@@ -23,7 +23,7 @@ int fps = 20;
 float speed = poolDiameter/(2*3.66*fps);
 
 // Time after which the sequence starts from the beginning.
-int maxTime = 10*fps;
+int maxTime = 0;
 
 // Distance between two adjacent drop points
 float dropDistance = (37.5/2)*cm;
@@ -141,6 +141,13 @@ ArrayList<Drop> drops = new ArrayList<Drop>();
  */
 void addDrop(Ring ring, int position, int impactFrame) {
   drops.add(new Drop(ring, position, impactFrame));
+  
+  // A moment in time when it is guaranteed that the wave has disappeared...
+  int lastsUntil = impactFrame +  (int)(poolDiameter/speed);
+  // ...padded with some silent time
+  lastsUntil += 5*fps;
+  
+  maxTime = max(maxTime, lastsUntil);
 }
 
 // Stroke color in animation
