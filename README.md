@@ -1,7 +1,7 @@
 ## Rain circle simulator
 Rain cicle simulator is a simulator for [Drop machine][machine] of _As above, so below_ art installation. It can be used to create animations that corresponds to patterns of circular waves produced by the drop machine.
 
-[machine]: https://github.com/otto-urpelainen/drop-machine/
+[machine]: https://github.com/oturpe/drop-machine/
 
 ### Usage
 
