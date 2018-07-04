@@ -150,6 +150,33 @@ void addDrop(Ring ring, int position, int impactFrame) {
   maxTime = max(maxTime, lastsUntil);
 }
 
+void addPattern(DropPattern pattern, int startFrame) {
+  switch (pattern) {
+  case TRIANGLE_EVEN:
+    addDrop(Ring.INNER, 0, startFrame);
+    addDrop(Ring.INNER, 2, startFrame);
+    addDrop(Ring.INNER, 4, startFrame);
+    break;
+  case TRIANGLE_ODD:
+    addDrop(Ring.INNER, 1, startFrame);
+    addDrop(Ring.INNER, 3, startFrame);
+    addDrop(Ring.INNER, 5, startFrame);
+    break;
+  case HEXAGON:
+    addPattern(DropPattern.TRIANGLE_EVEN, startFrame);
+    addPattern(DropPattern.TRIANGLE_ODD, startFrame);
+    break;
+  case SPIRAL:
+    addDrop(Ring.INNER, 6, startFrame);
+    addDrop(Ring.INNER, 1, startFrame + 2);
+    addDrop(Ring.INNER, 2, startFrame + 4);
+    addDrop(Ring.INNER, 3, startFrame + 6);
+    addDrop(Ring.INNER, 4, startFrame + 8);
+    addDrop(Ring.INNER, 5, startFrame + 10);
+    break;
+  }
+}
+
 // Stroke color in animation
 int strokeColor = 80;
 
@@ -186,20 +213,12 @@ void draw() {
  */
 void setDropPattern() {
   // Define any number of drops using the following syntax:
-  // addDrop(circle, position, time).
+  // addDrop(circle, position, time) OR
+  // addPattern(DropPattern.pattern, time)
 
   // Single drop in the middle
   addDrop(Ring.MIDDLE, 0, 0);
-
-  // Other examples:  
   
-  // A triangle
-  /*
-  addDrop(Ring.INNER, 0, 10);
-  addDrop(Ring.INNER, 2, 10);
-  addDrop(Ring.INNER, 4, 10);
-  */
-
   // Two triangles
   /*
   addDrop(Ring.INNER, 0, 10);
@@ -210,14 +229,11 @@ void setDropPattern() {
   addDrop(Ring.INNER, 3, 20);
   addDrop(Ring.INNER, 5, 20);
   */
-  
-  // Spiral
+
+  // Some ready made patterns (see DropPattern.java for complete
+  // list).
   /*
-  addDrop(Ring.INNER, 6, 2);
-  addDrop(Ring.INNER, 1, 4);
-  addDrop(Ring.INNER, 2, 6);
-  addDrop(Ring.INNER, 3, 8);
-  addDrop(Ring.INNER, 4, 10);
-  addDrop(Ring.INNER, 5, 12);
+  addPattern(DropPattern.HEXAGON, 5);
+  addPattern(DropPattern.SPIRAL, 80);
   */
 }
