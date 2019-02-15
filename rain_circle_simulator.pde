@@ -65,11 +65,22 @@ float[][][] dropPositions = {
   }
 };
 
-// Predefined drop pattens
-static int PATTERN_TRIANGLE_EVEN = 0;
-static int PATTERN_TRIANGLE_ODD = 1;
-static int PATTERN_HEXAGON = 2;
-static int PATTERN_SPIRAL =3;
+// Predefined drop patterns
+static int PATTERN_SINGLE_DROP = 1;
+static int PATTERN_TREE_OF_LIFE = 2;
+static int PATTERN_FLOWER_OF_LIFE = 3;
+static int PATTERN_FIRE_TRIANGLE = 4;
+static int PATTERN_WATER_TRIANGLE = 5;
+static int PATTERN_HEXAGON = 6;
+static int PATTERN_LARGE_HEXAGON = 7;
+static int PATTERN_SWASTIKA = 8;
+static int PATTERN_SPINDLE = 9;
+static int PATTERN_BAR = 10;
+static int PATTERN_SCEPTER = 11;
+static int PATTERN_SPIRAL = 12;
+static int PATTERN_OFF_CENTER_DROP = 13;
+static int PATTERN_SEMI_SWASTIKA = 14;
+static int PATTERN_RECTANGLE = 15;
 
 /**
  * Enumeration of the three drop rings of the machine.
@@ -270,13 +281,52 @@ void addDrop(Ring ring, int position, int impactFrame) {
 
 void addPattern(int pattern, int startFrame, boolean displayLegend) {
   String legend = "undefined_legend";
-  if (pattern == PATTERN_TRIANGLE_EVEN) {
+  if (pattern == PATTERN_SINGLE_DROP) {
+    legend = "Single drop";
+    addDrop(RING_MIDDLE, 0, startFrame);
+  }
+  else if (pattern == PATTERN_TREE_OF_LIFE) {
+    legend = "Tree of Life";
+    addDrop(RING_OUTER, 0, startFrame);
+    addDrop(RING_OUTER, 1, startFrame);
+    addDrop(RING_OUTER, 11, startFrame);
+    addDrop(RING_INNER, 1, startFrame);
+    addDrop(RING_INNER, 5, startFrame);
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 2, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+    addDrop(RING_INNER, 3, startFrame);
+    addDrop(RING_OUTER, 6, startFrame);
+  }
+  else if (pattern == PATTERN_FLOWER_OF_LIFE) {
+    legend = "Flower of Life";
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_INNER, 1, startFrame);
+    addDrop(RING_INNER, 2, startFrame);
+    addDrop(RING_INNER, 3, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+    addDrop(RING_INNER, 5, startFrame);
+    addDrop(RING_OUTER, 0, startFrame);
+    addDrop(RING_OUTER, 1, startFrame);
+    addDrop(RING_OUTER, 2, startFrame);
+    addDrop(RING_OUTER, 3, startFrame);
+    addDrop(RING_OUTER, 4, startFrame);
+    addDrop(RING_OUTER, 5, startFrame);
+    addDrop(RING_OUTER, 6, startFrame);
+    addDrop(RING_OUTER, 7, startFrame);
+    addDrop(RING_OUTER, 8, startFrame);
+    addDrop(RING_OUTER, 9, startFrame);
+    addDrop(RING_OUTER, 10, startFrame);
+    addDrop(RING_OUTER, 11, startFrame);
+  }
+  else if (pattern == PATTERN_FIRE_TRIANGLE) {
     legend = "Fire triangle";
     addDrop(RING_INNER, 0, startFrame);
     addDrop(RING_INNER, 2, startFrame);
     addDrop(RING_INNER, 4, startFrame);
   }
-  else if (pattern == PATTERN_TRIANGLE_ODD) {
+  else if (pattern == PATTERN_WATER_TRIANGLE) {
     legend = "Water triangle";
     addDrop(RING_INNER, 1, startFrame);
     addDrop(RING_INNER, 3, startFrame);
@@ -284,18 +334,84 @@ void addPattern(int pattern, int startFrame, boolean displayLegend) {
   }
   else if (pattern == PATTERN_HEXAGON) {
     legend = "Hexagon";
-    addPattern(PATTERN_TRIANGLE_EVEN, startFrame, false);
-    addPattern(PATTERN_TRIANGLE_ODD, startFrame, false);
+    addPattern(PATTERN_FIRE_TRIANGLE, startFrame, false);
+    addPattern(PATTERN_WATER_TRIANGLE, startFrame, false);
+  }
+  else if (pattern == PATTERN_LARGE_HEXAGON) {
+    legend = "Large hexagon";
+    addDrop(RING_OUTER, 0, startFrame);
+    addDrop(RING_OUTER, 1, startFrame);
+    addDrop(RING_OUTER, 2, startFrame);
+    addDrop(RING_OUTER, 3, startFrame);
+    addDrop(RING_OUTER, 4, startFrame);
+    addDrop(RING_OUTER, 5, startFrame);
+    addDrop(RING_OUTER, 6, startFrame);
+    addDrop(RING_OUTER, 7, startFrame);
+    addDrop(RING_OUTER, 8, startFrame);
+    addDrop(RING_OUTER, 9, startFrame);
+    addDrop(RING_OUTER, 10, startFrame);
+    addDrop(RING_OUTER, 11, startFrame);
+  }
+  else if (pattern == PATTERN_SWASTIKA) {
+    legend = "Swastika";
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_INNER, 2, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+    addDrop(RING_OUTER, 1, startFrame);
+    addDrop(RING_OUTER, 5, startFrame);
+    addDrop(RING_OUTER, 9, startFrame);
+  }
+  else if (pattern == PATTERN_SPINDLE) {
+    legend = "Spindle";
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 0, startFrame + 8);
+    addDrop(RING_INNER, 3, startFrame + 8);
+  }
+  else if (pattern == PATTERN_BAR) {
+    legend = "Bar";
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 1, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+    addDrop(RING_OUTER, 2, startFrame);
+    addDrop(RING_OUTER, 8, startFrame);
+  }
+  else if (pattern == PATTERN_SCEPTER) {
+    legend = "Scepter";
+    addDrop(RING_OUTER, 1, startFrame + 5);
+    addDrop(RING_OUTER, 11, startFrame + 5);
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_MIDDLE, 0, startFrame + 5);
+    addDrop(RING_INNER, 3, startFrame + 5);
   }
   else if (pattern == PATTERN_SPIRAL) {
     legend = "Spiral";
     addDrop(RING_INNER, 6, startFrame);
-    addDrop(RING_INNER, 1, startFrame + 2);
-    addDrop(RING_INNER, 2, startFrame + 4);
-    addDrop(RING_INNER, 3, startFrame + 6);
-    addDrop(RING_INNER, 4, startFrame + 8);
-    addDrop(RING_INNER, 5, startFrame + 10);
+    addDrop(RING_INNER, 1, startFrame + 3);
+    addDrop(RING_INNER, 2, startFrame + 6);
+    addDrop(RING_INNER, 3, startFrame + 9);
+    addDrop(RING_INNER, 4, startFrame + 12);
+    addDrop(RING_INNER, 5, startFrame + 15);
   }
+  else if (pattern == PATTERN_OFF_CENTER_DROP) {
+    legend = "Off-center drop";
+    addDrop(RING_OUTER, 2, startFrame);
+  }
+  else if (pattern == PATTERN_RECTANGLE) {
+    legend = "Rectangle";
+    addDrop(RING_INNER, 1, startFrame);
+    addDrop(RING_INNER, 2, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+    addDrop(RING_INNER, 5, startFrame);
+  }
+  else if (pattern == PATTERN_SEMI_SWASTIKA) {
+    legend = "Semi-swastika";
+    addDrop(RING_OUTER, 8, startFrame);
+    addDrop(RING_INNER, 3, startFrame);
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_OUTER, 2, startFrame);
+  };
 
   if (displayLegend) {
       addLegend(legend, startFrame, startFrame + 100);
@@ -370,28 +486,21 @@ void draw() {
  * any modification in normal use of this simulator.
  */
 void setDropPattern() {
-  // Define any number of drops using the following syntax:
-  // addDrop(circle, position, time) OR
-  // addPattern(DropPattern.pattern, time)
+  int frame = 0;
+  int patternLength = 200;
 
-  // Single drop in the middle
-  addPattern(PATTERN_HEXAGON, 0, true);
-  
-  // Two triangles
-  /*
-  addDrop(Ring.INNER, 0, 10);
-  addDrop(Ring.INNER, 2, 10);
-  addDrop(Ring.INNER, 4, 10);
-  
-  addDrop(Ring.INNER, 1, 20);
-  addDrop(Ring.INNER, 3, 20);
-  addDrop(Ring.INNER, 5, 20);
-  */
-
-  // Some ready made patterns (see DropPattern.java for complete
-  // list).
-  /*
-  addPattern(DropPattern.HEXAGON, 5);
-  addPattern(DropPattern.SPIRAL, 80);
-  */
+  addPattern(1, frame, true);
+  addPattern(2, frame += patternLength, true);
+  addPattern(3, frame += patternLength, true);
+  addPattern(4, frame += patternLength, true);
+  addPattern(5, frame += patternLength, true);
+  addPattern(6, frame += patternLength, true);
+  addPattern(7, frame += patternLength, true);
+  addPattern(8, frame += patternLength, true);
+  addPattern(9, frame += patternLength, true);
+  addPattern(10, frame += patternLength, true);
+  addPattern(11, frame += patternLength, true);
+  addPattern(12, frame += patternLength, true);
+  addPattern(13, frame += patternLength, true);
+  addPattern(14, frame += patternLength, true);
 }
