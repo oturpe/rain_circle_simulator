@@ -28,6 +28,10 @@ int maxTime = 0;
 // Distance between two adjacent drop points
 float dropDistance = (37.5/2)*cm;
 
+// Stroke properties in animation
+int strokeColor = 50;
+int strokeWeight = 3;
+
 // Positions of all drop points, indexed as [ring][clockwise position].
 // Ring 0 middle, coordinates are ordered {x, y} as usual.
 float[][][] dropPositions = {
@@ -229,9 +233,6 @@ void addPattern(int pattern, int startFrame) {
   }
 }
 
-// Stroke color in animation
-int strokeColor = 80;
-
 void setup() {
   // Have to do centimeter conversion here, since e.g. 200*cm cannot be
   // written into this particular call.
@@ -243,6 +244,7 @@ void setup() {
   
   noFill();
   stroke(strokeColor);
+  strokeWeight(strokeWeight);
   ellipseMode(RADIUS);
 }
 
