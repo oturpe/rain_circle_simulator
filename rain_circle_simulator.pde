@@ -257,6 +257,7 @@ void draw() {
   ellipse(0, 0, poolDiameter/2, poolDiameter/2);
   noFill();
 
+  rotate(PI/6.0);
   // Drops, 
   for (Drop drop: drops) {
     drop.draw(frameCount % maxTime);
