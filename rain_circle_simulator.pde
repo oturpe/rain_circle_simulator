@@ -160,7 +160,7 @@ class Drop {
    * @param currentFrame
    *    Current running frame
    */
-  void draw(int currentFrame) {
+  void draw(int currentFrame) {  
     int duration = currentFrame - impactFrame;
     if (duration < 0) {
       // Nothing to draw
