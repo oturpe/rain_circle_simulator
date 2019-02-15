@@ -33,31 +33,31 @@ float dropDistance = (37.5/2)*cm;
 float[][][] dropPositions = {
   // Center
   {
-    {myWidth/2,                    myHeight/2}
+    {0, 0}
   },
   // First ring
   {
-    {myWidth/2 - 0.5*dropDistance, myHeight/2 - 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 + 0.5*dropDistance, myHeight/2 - 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 + 1*dropDistance,   myHeight/2},
-    {myWidth/2 + 0.5*dropDistance, myHeight/2 + 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 - 0.5*dropDistance, myHeight/2 + 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 - 1*dropDistance,   myHeight/2},
+    {- 0.5*dropDistance, - 0.5*sqrt(3)*dropDistance},
+    {+ 0.5*dropDistance, - 0.5*sqrt(3)*dropDistance},
+    {+ 1*dropDistance,   0},
+    {+ 0.5*dropDistance, + 0.5*sqrt(3)*dropDistance},
+    {- 0.5*dropDistance, + 0.5*sqrt(3)*dropDistance},
+    {- 1*dropDistance,   0},
   },
   // Second ring
   {
-    {myWidth/2 - 1*dropDistance,   myHeight/2 - sqrt(3)*dropDistance},
-    {myWidth/2,                    myHeight/2 - sqrt(3)*dropDistance},
-    {myWidth/2 + 1*dropDistance,   myHeight/2 - sqrt(3)*dropDistance},
-    {myWidth/2 + 1.5*dropDistance, myHeight/2 - 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 + 2*dropDistance,   myHeight/2},
-    {myWidth/2 + 1.5*dropDistance, myHeight/2 + 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 + 1*dropDistance,   myHeight/2 + sqrt(3)*dropDistance},
-    {myWidth/2,                    myHeight/2 + sqrt(3)*dropDistance},
-    {myWidth/2 - 1*dropDistance,   myHeight/2 + sqrt(3)*dropDistance},
-    {myWidth/2 - 1.5*dropDistance, myHeight/2 + 0.5*sqrt(3)*dropDistance},
-    {myWidth/2 - 2*dropDistance,   myHeight/2},
-    {myWidth/2 - 1.5*dropDistance, myHeight/2 - 0.5*sqrt(3)*dropDistance},
+    {- 1*dropDistance,   - sqrt(3)*dropDistance},
+    {0,                  - sqrt(3)*dropDistance},
+    {+ 1*dropDistance,   - sqrt(3)*dropDistance},
+    {+ 1.5*dropDistance, - 0.5*sqrt(3)*dropDistance},
+    {+ 2*dropDistance,   0},
+    {+ 1.5*dropDistance, + 0.5*sqrt(3)*dropDistance},
+    {+ 1*dropDistance,   + sqrt(3)*dropDistance},
+    {0,                  + sqrt(3)*dropDistance},
+    {- 1*dropDistance,   + sqrt(3)*dropDistance},
+    {- 1.5*dropDistance, + 0.5*sqrt(3)*dropDistance},
+    {- 2*dropDistance,   0},
+    {- 1.5*dropDistance, - 0.5*sqrt(3)*dropDistance},
   }
 };
 
@@ -247,10 +247,12 @@ void setup() {
 }
 
 void draw() {
+  translate(myWidth/2, myHeight/2);
+
   background(strokeColor);
   // Pool shape
   fill(0);
-  ellipse(width/2, height/2, poolDiameter/2, poolDiameter/2);
+  ellipse(0, 0, poolDiameter/2, poolDiameter/2);
   noFill();
 
   // Drops, 
