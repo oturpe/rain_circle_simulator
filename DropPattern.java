@@ -1,6 +1,1 @@
-enum DropPattern {
-  TRIANGLE_EVEN,
-  TRIANGLE_ODD,
-  HEXAGON,
-  SPIRAL;
-}
+

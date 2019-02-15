@@ -61,6 +61,60 @@ float[][][] dropPositions = {
   }
 };
 
+// Predefined drop pattens
+static int PATTERN_TRIANGLE_EVEN = 0;
+static int PATTERN_TRIANGLE_ODD = 1;
+static int PATTERN_HEXAGON = 2;
+static int PATTERN_SPIRAL =3;
+
+/**
+ * Enumeration of the three drop rings of the machine.
+ */
+public class Ring {
+  // Ring index
+  int index;
+  // Number of drop position in this ring
+  int dropCount;
+  
+  /**
+   * Initialize a new Ring enum.
+   *
+   * @param index
+   *    Ring index
+   *
+   * @param dropCount
+   *    Count of drop positions
+   */
+  private Ring(int index, int dropCount) {
+    this.index = index;
+    this.dropCount = dropCount;
+  }
+
+  /**
+   * Return ring index.
+   *
+   * @return
+   *    Ring index
+   */
+  public int getIndex() {
+    return index;
+  }
+
+  /**
+   * Return drop count.
+   *
+   * @return
+   *    Drop count
+   */
+  public int getDropCount() {
+    return dropCount;
+  }
+}
+
+Ring RING_MIDDLE = new Ring(0, 1);
+Ring RING_INNER = new Ring(1, 6);
+Ring RING_OUTER = new Ring(2, 13);
+  
 /**
  * A single drop impacting the surface at a specified moment of time and
  * the ring wave created by it.
@@ -150,30 +204,28 @@ void addDrop(Ring ring, int position, int impactFrame) {
   maxTime = max(maxTime, lastsUntil);
 }
 
-void addPattern(DropPattern pattern, int startFrame) {
-  switch (pattern) {
-  case TRIANGLE_EVEN:
-    addDrop(Ring.INNER, 0, startFrame);
-    addDrop(Ring.INNER, 2, startFrame);
-    addDrop(Ring.INNER, 4, startFrame);
-    break;
-  case TRIANGLE_ODD:
-    addDrop(Ring.INNER, 1, startFrame);
-    addDrop(Ring.INNER, 3, startFrame);
-    addDrop(Ring.INNER, 5, startFrame);
-    break;
-  case HEXAGON:
-    addPattern(DropPattern.TRIANGLE_EVEN, startFrame);
-    addPattern(DropPattern.TRIANGLE_ODD, startFrame);
-    break;
-  case SPIRAL:
-    addDrop(Ring.INNER, 6, startFrame);
-    addDrop(Ring.INNER, 1, startFrame + 2);
-    addDrop(Ring.INNER, 2, startFrame + 4);
-    addDrop(Ring.INNER, 3, startFrame + 6);
-    addDrop(Ring.INNER, 4, startFrame + 8);
-    addDrop(Ring.INNER, 5, startFrame + 10);
-    break;
+void addPattern(int pattern, int startFrame) {
+  if (pattern == PATTERN_TRIANGLE_EVEN) {
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_INNER, 2, startFrame);
+    addDrop(RING_INNER, 4, startFrame);
+  }
+  else if (pattern == PATTERN_TRIANGLE_ODD) {
+    addDrop(RING_INNER, 1, startFrame);
+    addDrop(RING_INNER, 3, startFrame);
+    addDrop(RING_INNER, 5, startFrame);
+  }
+  else if (pattern == PATTERN_HEXAGON) {
+    addPattern(PATTERN_TRIANGLE_EVEN, startFrame);
+    addPattern(PATTERN_TRIANGLE_ODD, startFrame);
+  }
+  else if (pattern == PATTERN_SPIRAL) {
+    addDrop(RING_INNER, 6, startFrame);
+    addDrop(RING_INNER, 1, startFrame + 2);
+    addDrop(RING_INNER, 2, startFrame + 4);
+    addDrop(RING_INNER, 3, startFrame + 6);
+    addDrop(RING_INNER, 4, startFrame + 8);
+    addDrop(RING_INNER, 5, startFrame + 10);
   }
 }
 
