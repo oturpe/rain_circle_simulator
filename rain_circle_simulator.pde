@@ -235,6 +235,20 @@ public class Legend {
 ArrayList<Drop> drops = new ArrayList<Drop>();
 ArrayList<Legend> legends = new ArrayList<Legend>();
 
+/**
+ * Return a moment in time when it is guaranteed that a circle made
+ * by drop impact at given time has disappeared.
+ * 
+ * @param impactFrame
+ *    Time of impact
+ *
+ * @return
+ *    When drop cicle has disappeared
+ */
+public int lastsUntil(int impactFrame) {
+  int lastsUntil = impactFrame + (int)(poolDiameter/speed);
+  return lastsUntil + 5*fps;  
+}
 
 /**
  * Add drop with given properties to the drop list using simple
@@ -251,13 +265,7 @@ ArrayList<Legend> legends = new ArrayList<Legend>();
  */
 void addDrop(Ring ring, int position, int impactFrame) {
   drops.add(new Drop(ring, position, impactFrame));
-  
-  // A moment in time when it is guaranteed that the wave has disappeared...
-  int lastsUntil = impactFrame +  (int)(poolDiameter/speed);
-  // ...padded with some silent time
-  lastsUntil += 5*fps;
-  
-  maxTime = max(maxTime, lastsUntil);
+  maxTime = max(maxTime, lastsUntil(impactFrame));
 }
 
 void addPattern(int pattern, int startFrame, boolean displayLegend) {
