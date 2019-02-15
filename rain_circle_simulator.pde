@@ -12,8 +12,8 @@ float cm = 4.0;
 
 // Size of screen
 // These have to match values used in call to size()
-float myHeight = 200*cm;
-float myWidth = 200*cm;
+float myHeight = 150*cm;
+float myWidth = 150*cm;
 
 // Diameter of the pool
 float poolDiameter = 148*cm;
@@ -235,7 +235,7 @@ int strokeColor = 80;
 void setup() {
   // Have to do centimeter conversion here, since e.g. 200*cm cannot be
   // written into this particular call.
-  size(800, 800);
+  size(600, 600);
 
   // Modify setDropPattern() method to define simulated pattern
   setDropPattern();
