@@ -181,8 +181,60 @@ class Drop {
   } 
 }
 
+/**
+ * A piece of text to be shown alongside animation for a 
+ * specified time.
+ */
+public class Legend {
+  // The text to display
+  String text;
+  // First moment display
+  int startFrame;
+  // Last moment display
+  int endFrame;
+  
+  /**
+   * Initialize a new legend.
+   *
+   * @param text
+   *    Text to display
+   *
+   * @param startFrame
+   *    First moment of display
+   *
+   * @param endFrame
+   *    Last moment of display
+   */
+  Legend(String text, int startFrame, int endFrame) {
+    this.text = text;
+    this.startFrame = startFrame;
+    this.endFrame = endFrame;
+  }
+  
+  /**
+   * Draws the legend.
+   *
+   * Current frame is passed in as parameter so that internal
+   * frameNumber parameter can be preprocessed before passing it here.
+   * This can be used to make the animation cyclic.
+   *
+   * @param currentFrame
+   *    Current running frame
+   */
+  void draw(int currentFrame) {  
+    if (startFrame > currentFrame || currentFrame > endFrame) {
+      // Nothing to draw
+      return;
+    }
+
+    text(text, 0, 0);
+  }
+}
+
 // List of drops in simulation.
 ArrayList<Drop> drops = new ArrayList<Drop>();
+ArrayList<Legend> legends = new ArrayList<Legend>();
+
 
 /**
  * Add drop with given properties to the drop list using simple
@@ -208,22 +260,27 @@ void addDrop(Ring ring, int position, int impactFrame) {
   maxTime = max(maxTime, lastsUntil);
 }
 
-void addPattern(int pattern, int startFrame) {
+void addPattern(int pattern, int startFrame, boolean displayLegend) {
+  String legend = "undefined_legend";
   if (pattern == PATTERN_TRIANGLE_EVEN) {
+    legend = "Fire triangle";
     addDrop(RING_INNER, 0, startFrame);
     addDrop(RING_INNER, 2, startFrame);
     addDrop(RING_INNER, 4, startFrame);
   }
   else if (pattern == PATTERN_TRIANGLE_ODD) {
+    legend = "Water triangle";
     addDrop(RING_INNER, 1, startFrame);
     addDrop(RING_INNER, 3, startFrame);
     addDrop(RING_INNER, 5, startFrame);
   }
   else if (pattern == PATTERN_HEXAGON) {
-    addPattern(PATTERN_TRIANGLE_EVEN, startFrame);
-    addPattern(PATTERN_TRIANGLE_ODD, startFrame);
+    legend = "Hexagon";
+    addPattern(PATTERN_TRIANGLE_EVEN, startFrame, false);
+    addPattern(PATTERN_TRIANGLE_ODD, startFrame, false);
   }
   else if (pattern == PATTERN_SPIRAL) {
+    legend = "Spiral";
     addDrop(RING_INNER, 6, startFrame);
     addDrop(RING_INNER, 1, startFrame + 2);
     addDrop(RING_INNER, 2, startFrame + 4);
@@ -231,6 +288,33 @@ void addPattern(int pattern, int startFrame) {
     addDrop(RING_INNER, 4, startFrame + 8);
     addDrop(RING_INNER, 5, startFrame + 10);
   }
+
+  if (displayLegend) {
+      addLegend(legend, startFrame, startFrame + 100);
+  }
+}
+
+/**
+ * Add legend with given properties to the legend list using simple
+ * syntax.
+ *
+ * @param text
+ *    Legend text
+ *
+ * @param startFrame
+ *    First moment of display
+ *
+ * @param endFrame
+ *    Last moment of display
+ */
+void addLegend(String text, int startFrame, int endFrame)
+{
+  legends.add(new Legend(text, startFrame, endFrame));
+
+  // Last moment of display padded with some silent time
+  int lastsUntil = endFrame + 5*fps;
+
+  maxTime = max(maxTime, lastsUntil);
 }
 
 void setup() {
@@ -246,6 +330,8 @@ void setup() {
   stroke(strokeColor);
   strokeWeight(strokeWeight);
   ellipseMode(RADIUS);
+  textSize(16);
+  textAlign(LEFT, TOP);
 }
 
 void draw() {
@@ -262,6 +348,13 @@ void draw() {
   for (Drop drop: drops) {
     drop.draw(frameCount % maxTime);
   }
+  rotate(-PI/6.0);
+  
+  translate(-myWidth/2 + 10, -myHeight/2 + 10);
+  fill(0xd0);
+  for (Legend legend: legends) {
+    legend.draw(frameCount % maxTime);
+  }
 }
 
 /**
@@ -274,7 +367,7 @@ void setDropPattern() {
   // addPattern(DropPattern.pattern, time)
 
   // Single drop in the middle
-  addDrop(Ring.MIDDLE, 0, 0);
+  addPattern(PATTERN_HEXAGON, 0, true);
   
   // Two triangles
   /*
