@@ -414,7 +414,7 @@ void addPattern(int pattern, int startFrame, boolean displayLegend) {
   };
 
   if (displayLegend) {
-      addLegend(legend, startFrame, startFrame + 100);
+      addLegend(pattern + " " + legend, startFrame, startFrame + 100);
   }
 }
 
