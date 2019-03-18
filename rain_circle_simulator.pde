@@ -81,6 +81,7 @@ static int PATTERN_SPIRAL = 12;
 static int PATTERN_OFF_CENTER_DROP = 13;
 static int PATTERN_SEMI_SWASTIKA = 14;
 static int PATTERN_RECTANGLE = 15;
+static int PATTERN_LIGHTNING = 16;
 
 /**
  * Enumeration of the three drop rings of the machine.
@@ -411,8 +412,16 @@ void addPattern(int pattern, int startFrame, boolean displayLegend) {
     addDrop(RING_MIDDLE, 0, startFrame);
     addDrop(RING_INNER, 0, startFrame);
     addDrop(RING_OUTER, 2, startFrame);
-  };
-
+  }
+  else if (pattern == PATTERN_LIGHTNING) {
+    legend = "Lightning bolt";
+    addDrop(RING_OUTER, 1, startFrame + 2);
+    addDrop(RING_INNER, 0, startFrame);
+    addDrop(RING_MIDDLE, 0, startFrame);
+    addDrop(RING_INNER, 3, startFrame);
+    addDrop(RING_OUTER, 7, startFrame + 2);
+  }
+  
   if (displayLegend) {
       addLegend(pattern + " " + legend, startFrame, startFrame + 100);
   }
