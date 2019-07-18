@@ -64,6 +64,9 @@ final float[][][] dropPositions = {
 
 // Time after which the sequence starts from the beginning.
 int maxTime = 0;
+// The frameCount where animation starts. Setting this value to current
+// frameCount can be used to reset the animation.
+int startTime = 0;
 
 // Predefined drop patterns
 final static int PATTERN_SINGLE_DROP = 1;
@@ -477,10 +480,12 @@ void draw() {
   ellipse(0, 0, poolDiameter/2, poolDiameter/2);
   noFill();
 
+  int animationFrame = (frameCount - startTime % maxTime);
+
   // Quick fix for shape orientation: Rotate before drawing the circles
   rotate(PI/6.0);
   for (Drop drop: drops) {
-    drop.draw(frameCount % maxTime);
+    drop.draw(animationFrame);
   }
   rotate(-PI/6.0);
   
@@ -488,7 +493,7 @@ void draw() {
   translate(-myWidth/2 + 10, -myHeight/2 + 10);
   fill(0xd0);
   for (Legend legend: legends) {
-    legend.draw(frameCount % maxTime);
+    legend.draw(animationFrame);
   }
 }
 
