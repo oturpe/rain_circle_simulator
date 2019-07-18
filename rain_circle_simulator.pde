@@ -8,33 +8,30 @@
  */
  
 // One centimeter in pixels
-float cm = 4.0;
+final float cm = 4.0;
 
 // Size of screen
 // These have to match values used in call to size()
-float myHeight = 150*cm;
-float myWidth = 150*cm;
+final float myHeight = 150*cm;
+final float myWidth = 150*cm;
 
 // Diameter of the pool
-float poolDiameter = 148*cm;
+final float poolDiameter = 148*cm;
 
 // Speed of wave in the pool
-int fps = 20;
-float speed = poolDiameter/(2*3.66*fps);
-
-// Time after which the sequence starts from the beginning.
-int maxTime = 0;
+final int fps = 20;
+final float speed = poolDiameter/(2*3.66*fps);
 
 // Distance between two adjacent drop points
-float dropDistance = (37.5/2)*cm;
+final float dropDistance = (37.5/2)*cm;
 
 // Stroke properties in animation
-int strokeColor = 50;
-int strokeWeight = 3;
+final int strokeColor = 50;
+final int strokeWeight = 3;
 
 // Positions of all drop points, indexed as [ring][clockwise position].
 // Ring 0 middle, coordinates are ordered {x, y} as usual.
-float[][][] dropPositions = {
+final float[][][] dropPositions = {
   // Center
   {
     {0, 0}
@@ -65,23 +62,26 @@ float[][][] dropPositions = {
   }
 };
 
+// Time after which the sequence starts from the beginning.
+int maxTime = 0;
+
 // Predefined drop patterns
-static int PATTERN_SINGLE_DROP = 1;
-static int PATTERN_TREE_OF_LIFE = 2;
-static int PATTERN_FLOWER_OF_LIFE = 3;
-static int PATTERN_FIRE_TRIANGLE = 4;
-static int PATTERN_WATER_TRIANGLE = 5;
-static int PATTERN_HEXAGON = 6;
-static int PATTERN_LARGE_HEXAGON = 7;
-static int PATTERN_SWASTIKA = 8;
-static int PATTERN_SPINDLE = 9;
-static int PATTERN_BAR = 10;
-static int PATTERN_SCEPTER = 11;
-static int PATTERN_SPIRAL = 12;
-static int PATTERN_OFF_CENTER_DROP = 13;
-static int PATTERN_SEMI_SWASTIKA = 14;
-static int PATTERN_RECTANGLE = 15;
-static int PATTERN_LIGHTNING = 16;
+final static int PATTERN_SINGLE_DROP = 1;
+final static int PATTERN_TREE_OF_LIFE = 2;
+final static int PATTERN_FLOWER_OF_LIFE = 3;
+final static int PATTERN_FIRE_TRIANGLE = 4;
+final static int PATTERN_WATER_TRIANGLE = 5;
+final static int PATTERN_HEXAGON = 6;
+final static int PATTERN_LARGE_HEXAGON = 7;
+final static int PATTERN_SWASTIKA = 8;
+final static int PATTERN_SPINDLE = 9;
+final static int PATTERN_BAR = 10;
+final static int PATTERN_SCEPTER = 11;
+final static int PATTERN_SPIRAL = 12;
+final static int PATTERN_OFF_CENTER_DROP = 13;
+final static int PATTERN_SEMI_SWASTIKA = 14;
+final static int PATTERN_RECTANGLE = 15;
+final static int PATTERN_LIGHTNING = 16;
 
 /**
  * Enumeration of the three drop rings of the machine.
@@ -127,9 +127,9 @@ public class Ring {
   }
 }
 
-Ring RING_MIDDLE = new Ring(0, 1);
-Ring RING_INNER = new Ring(1, 6);
-Ring RING_OUTER = new Ring(2, 13);
+final Ring RING_MIDDLE = new Ring(0, 1);
+final Ring RING_INNER = new Ring(1, 6);
+final Ring RING_OUTER = new Ring(2, 13);
   
 /**
  * A single drop impacting the surface at a specified moment of time and
@@ -244,8 +244,8 @@ public class Legend {
 }
 
 // List of drops in simulation.
-ArrayList<Drop> drops = new ArrayList<Drop>();
-ArrayList<Legend> legends = new ArrayList<Legend>();
+final ArrayList<Drop> drops = new ArrayList<Drop>();
+final ArrayList<Legend> legends = new ArrayList<Legend>();
 
 /**
  * Return a moment in time when it is guaranteed that a circle made
