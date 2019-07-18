@@ -468,6 +468,7 @@ void setup() {
 }
 
 void draw() {
+  // Move to the center, makes easier to work in precense of circular symmetry.
   translate(myWidth/2, myHeight/2);
 
   background(strokeColor);
@@ -476,13 +477,14 @@ void draw() {
   ellipse(0, 0, poolDiameter/2, poolDiameter/2);
   noFill();
 
+  // Quick fix for shape orientation: Rotate before drawing the circles
   rotate(PI/6.0);
-  // Drops, 
   for (Drop drop: drops) {
     drop.draw(frameCount % maxTime);
   }
   rotate(-PI/6.0);
   
+  // Draw legend in top left corner
   translate(-myWidth/2 + 10, -myHeight/2 + 10);
   fill(0xd0);
   for (Legend legend: legends) {
