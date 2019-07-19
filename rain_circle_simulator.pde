@@ -266,6 +266,14 @@ public int lastsUntil(int impactFrame) {
 }
 
 /**
+ * Clears current pattern.
+ */
+void clearDrops() {
+  drops.clear();
+  maxTime = 0;
+}
+
+/**
  * Add drop with given properties to the drop list using simple
  * syntax.
  *
