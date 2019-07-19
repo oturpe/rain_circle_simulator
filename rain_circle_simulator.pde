@@ -6,7 +6,18 @@
  *
  * Coordinates are centimeters. 
  */
- 
+
+// Enumerated values for runtimes 
+// Standard Processing runtime
+static final String RUNTIME_PROCESSING = "processing";
+// Processing.js runtime
+static final String RUNTIME_PROCESSING_JS = "processingjs";
+
+// Simulator configuration parameters and their default values. Override by
+// writing directly to these variables.
+// Runtime type. Must be one of the RUNTIME enumerated values.
+static String configRuntime = RUNTIME_PROCESSING;
+
 // One centimeter in pixels
 final float cm = 4.0;
 
@@ -483,7 +494,10 @@ void setup() {
   
   noFill();
   stroke(strokeColor);
-  strokeWeight(strokeWeight);
+  // Processing.js does not support strokeWeight
+  if (configRuntime != RUNTIME_PROCESSING_JS) {
+    strokeWeight(strokeWeight);
+  }
   ellipseMode(RADIUS);
   textSize(16);
   textAlign(LEFT, TOP);
@@ -510,12 +524,16 @@ void draw() {
     drop.draw(animationFrame);
   }
   rotate(-PI/6.0);
-  
-  // Draw legend in top left corner
-  translate(-myWidth/2 + 10, -myHeight/2 + 10);
-  fill(0xd0);
-  for (Legend legend: legends) {
-    legend.draw(animationFrame);
+
+  // Draw legend in top left corner. Not suppored on processing.js, since it
+  // does not have the required method 'text'.
+  if (configRuntime != RUNTIME_PROCESSING_JS) {   
+    translate(-myWidth/2 + 10, -myHeight/2 + 10);
+    fill(0xd0);
+    for (Legend legend: legends) {
+      legend.draw(animationFrame);
+    }
+    translate(myWidth/2 - 10, myHeight/2 - 10);
   }
 }
 
