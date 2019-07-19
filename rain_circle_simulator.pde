@@ -494,7 +494,7 @@ void draw() {
   ellipse(0, 0, poolDiameter/2, poolDiameter/2);
   noFill();
 
-  int animationFrame = (frameCount - startTime % maxTime);
+  int animationFrame = ((frameCount - startTime) % maxTime);
 
   // Quick fix for shape orientation: Rotate before drawing the circles
   rotate(PI/6.0);
