@@ -17,6 +17,8 @@ static final String RUNTIME_PROCESSING_JS = "processingjs";
 // writing directly to these variables.
 // Runtime type. Must be one of the RUNTIME enumerated values.
 static String configRuntime = RUNTIME_PROCESSING;
+// Stroke and background color
+static int configStrokeColor = 50;
 
 // One centimeter in pixels
 final float cm = 4.0;
@@ -37,7 +39,6 @@ final float speed = poolDiameter/(2*3.66*fps);
 final float dropDistance = (37.5/2)*cm;
 
 // Stroke properties in animation
-final int strokeColor = 50;
 final int strokeWeight = 3;
 
 // Positions of all drop points, indexed as [ring][clockwise position].
@@ -493,7 +494,7 @@ void setup() {
   frameRate(fps);
   
   noFill();
-  stroke(strokeColor);
+  stroke(configStrokeColor);
   // Processing.js does not support strokeWeight
   if (configRuntime != RUNTIME_PROCESSING_JS) {
     strokeWeight(strokeWeight);
@@ -510,7 +511,7 @@ void draw() {
   // Move to the center, makes easier to work in precense of circular symmetry.
   translate(myWidth/2, myHeight/2);
 
-  background(strokeColor);
+  background(configStrokeColor);
   // Pool shape
   fill(0);
   ellipse(0, 0, poolDiameter/2, poolDiameter/2);
