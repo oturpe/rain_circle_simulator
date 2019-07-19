@@ -458,8 +458,6 @@ void setup() {
   // written into this particular call.
   size(600, 600);
 
-  // Modify setDropPattern() method to define simulated pattern
-  setDropPattern();
   frameRate(fps);
   
   noFill();
@@ -468,6 +466,9 @@ void setup() {
   ellipseMode(RADIUS);
   textSize(16);
   textAlign(LEFT, TOP);
+
+  // Modify setDropPattern() method to define simulated pattern
+  setDropPattern();
 }
 
 void draw() {
