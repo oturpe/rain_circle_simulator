@@ -283,6 +283,19 @@ void addDrop(Ring ring, int position, int impactFrame) {
   maxTime = max(maxTime, lastsUntil(impactFrame));
 }
 
+/**
+ * Add given pattern to animation, starting at given frame. Optionally legend
+ * can be displayed.
+ *
+ * @param pattern
+ *    Index of pattern to add
+ *
+ * @param startFrame
+ *    Frame where the pattern starts
+ *
+ * @param displayLegend
+ *    If legend is displayed
+ */
 void addPattern(int pattern, int startFrame, boolean displayLegend) {
   String legend = "undefined_legend";
   if (pattern == PATTERN_SINGLE_DROP) {
